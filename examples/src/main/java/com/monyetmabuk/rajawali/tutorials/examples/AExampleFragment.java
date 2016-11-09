@@ -132,7 +132,7 @@ public abstract class AExampleFragment extends Fragment implements IDisplay, OnC
 		});
 	}
 
-	protected abstract class AExampleRenderer extends Renderer {
+	public abstract class AExampleRenderer extends Renderer {
 
 		public AExampleRenderer(Context context) {
 			super(context);
