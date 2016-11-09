@@ -24,7 +24,7 @@ import org.rajawali3d.renderer.Renderer;
 
 public class FloatingWindow extends Service {
     private WindowManager wm;
-    private LinearLayout ll;
+    private LinearLayout mLinearLayout;
 
     @Nullable
     @Override
@@ -36,11 +36,11 @@ public class FloatingWindow extends Service {
     public void onCreate() {
         super.onCreate();
 
-        wm = (WindowManager) getSystemService(WINDOW_SERVICE);
-        ll = new LinearLayout(this);
+        wm = (WindowManager)getSystemService(WINDOW_SERVICE);
+        mLinearLayout = new LinearLayout(this);
 
         LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        //ll.setBackgroundColor(Color.argb(66, 256, 0, 0));
+        //mLinearLayout.setBackgroundColor(Color.argb(66, 256, 0, 0));
 
         final WindowManager.LayoutParams params = new WindowManager.LayoutParams(400, 800, WindowManager.LayoutParams.TYPE_PHONE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
         params.x = 200;
@@ -48,7 +48,7 @@ public class FloatingWindow extends Service {
 
         params.gravity = Gravity.CENTER | Gravity.CENTER;
 
-        wm.addView(ll, params);
+        wm.addView(mLinearLayout, params);
 
         final org.rajawali3d.view.SurfaceView surface = new org.rajawali3d.view.SurfaceView(this);
         surface.setFrameRate(60.0);
@@ -56,15 +56,15 @@ public class FloatingWindow extends Service {
         surface.setTransparent(true);
 
         // Add mSurface to your root view
-        ll.addView(surface, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT));
+        mLinearLayout.addView(surface, new ActionBar.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT));
 
         Renderer renderer;
-        renderer = new FBXRenderer(this);
+//        renderer = new FBXRenderer(this);
+        renderer = new MD5AnimationRenderer(this);
         surface.setSurfaceRenderer(renderer);
         surface.setTransparent(true);
 
-        ll.setOnTouchListener(new View.OnTouchListener() {
-
+        mLinearLayout.setOnTouchListener(new View.OnTouchListener() {
             int x, y;
             float touchedX, touchedY;
             private WindowManager.LayoutParams updateParameters = params;
@@ -82,7 +82,7 @@ public class FloatingWindow extends Service {
                     case MotionEvent.ACTION_MOVE:
                         updateParameters.x = (int) (x + (event.getRawX() - touchedX));
                         updateParameters.y = (int) (y + (event.getRawY() - touchedY));
-                        wm.updateViewLayout(ll, updateParameters);
+                        wm.updateViewLayout(mLinearLayout, updateParameters);
 
                         break;
                     default:

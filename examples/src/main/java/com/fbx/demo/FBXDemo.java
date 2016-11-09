@@ -18,7 +18,6 @@ public class FBXDemo extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.fbx_demo);
         final org.rajawali3d.view.SurfaceView surface = new org.rajawali3d.view.SurfaceView(this);
         surface.setFrameRate(60.0);
@@ -31,8 +30,5 @@ public class FBXDemo extends Activity {
         renderer = new FBXRenderer(this);
         surface.setSurfaceRenderer(renderer);
         surface.setTransparent(true);
-
     }
-
-
 }
